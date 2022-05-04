@@ -1,0 +1,31 @@
+/* Types */
+.fullpage {
+    /* background-color: red; */
+}
+
+.default {
+    /* background-color: yellow; */
+    max-width: 1728px;
+    margin: auto;
+}
+
+.fixed {
+    width: 100%;
+    position: fixed;
+    left: 0px;
+}
+
+/* Paddings */
+.padding-small {
+    padding: 0px 38px;
+}
+
+.padding-big {
+    padding: 0px 60px;
+}
+
+/* Distribution */
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}

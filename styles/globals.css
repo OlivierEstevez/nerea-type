@@ -1,9 +1,16 @@
-html,
+@import url("./variables.css");
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-base);
+  padding: 48px 0px;
 }
 
 a {
@@ -11,6 +18,44 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+p {
+  white-space: pre-line;
+  vertical-align: bottom;
+}
+
+/* THEMES */
+body,
+body[data-theme="white"] {
+    --color-background: var(--color-grey);
+    --color-foreground: var(--color-white);
+    --color-base: var(--color-black); 
+    --color-accent: var(--color-green); 
+}
+
+body[data-theme="black"] {
+    --color-background: var(--color-black);
+    --color-foreground: var(--color-black);
+    --color-base: var(--color-white); 
+    --color-accent: var(--color-green); 
+}
+
+body[data-theme="green"] {
+    --color-background: var(--color-green);
+    --color-foreground: var(--color-green);
+    --color-base: var(--color-black);
+    --color-accent: var(--color-white); 
+}
+
+body[data-theme="purple"] {
+    --color-background: var(--color-purple-light);
+    --color-foreground: var(--color-purple-dark);
+    --color-base: var(--color-black);
+    --color-accent: var(--color-green); 
+}
+
+body[data-theme="brown"] {
+    --color-background: var(--color-brown-dark);
+    --color-foreground: var(--color-brown-dark);
+    --color-base: var(--color-green);
+    --color-accent: var(--color-white); 
 }
