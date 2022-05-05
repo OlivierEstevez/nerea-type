@@ -8,16 +8,18 @@ import container from "../styles/Containers.module.css"
 
 import texts from "../assets/texts.json"
 
-export default function Home() {
+export default function Home(props) {
 
   const [dateState, setDateState] = useState()
 
   useEffect(() => {
-    setDateState(new Date())
-  }, []);
-
-  useEffect(() => {
-    setInterval(() => setDateState(new Date()), 1000);
+    const fetchTime = async () => {
+      const res = await fetch("http://worldtimeapi.org/api/timezone/Europe/Madrid")
+      const data = await res.json()
+      setDateState(data)
+    }
+    fetchTime()
+    setInterval(() => fetchTime(), 1000)
   }, [])
 
   return (
@@ -29,13 +31,15 @@ export default function Home() {
       </Head>
 
       <Header
-        date={dateState ? `${dateState.getUTCHours()}:${dateState.getUTCMinutes()}:${dateState.getUTCSeconds()} [GMT+1]` : "HH:mm:ss"}
+        // date={dateState ? `${dateState.getUTCHours()}:${dateState.getUTCMinutes()}:${dateState.getUTCSeconds()} [GMT+1]` : "HH:mm:ss"}
+        date={dateState?.datetime.split("T")[1].split("+")[0].split(".")[0]}
       />
       <Footer
         font={"Denbora_02_07_12_35"}
       />
 
       <div className={`${container.fullpage}`}>
+        <h1>{props.date}</h1>
       </div>
 
       <div className={`${container.default} ${container["padding-small"]}`}>
