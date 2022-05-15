@@ -36,6 +36,8 @@ export default function Header(props) {
                     background: var(--color-foreground);
                     border-bottom: 1px solid var(--color-base);
                     border-top: 1px solid var(--color-base);
+
+                    z-index: 10;
                 }
 
             `}</style>

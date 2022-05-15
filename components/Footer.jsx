@@ -9,7 +9,7 @@ export default function Footer(props) {
         <style jsx>{`
                 .footer {
                     bottom: 0px;
-                
+                  
                     padding-top: 12px;
                     padding-bottom: 12px;
                 
@@ -17,6 +17,8 @@ export default function Footer(props) {
                     color: var(--color-black);
                     border-bottom: 1px solid var(--color-black);
                     border-top: 1px solid var(--color-black);
+
+                    z-index: 10;
                 }
 
             `}</style>

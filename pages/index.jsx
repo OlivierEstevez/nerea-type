@@ -1,16 +1,21 @@
 import {useState, useEffect} from 'react';
 import Head from 'next/head'
+import opentype from 'opentype.js'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import {GlyphListContainer, GlyphList} from '../components/GlyphList';
+import TypeTester from '../components/TypeTester';
 
 import container from "../styles/Containers.module.css"
 
 import texts from "../assets/texts.json"
 
+
 export default function Home(props) {
 
   const [dateState, setDateState] = useState()
+  const [glyphs, setGlyphs] = useState()
 
   useEffect(() => {
     const fetchTime = async () => {
@@ -20,6 +25,25 @@ export default function Home(props) {
     }
     fetchTime()
     setInterval(() => fetchTime(), 1000)
+
+    opentype.load("/TFG_v_03GX.ttf", (err, font) => {
+      if(err) {
+        console.log(font)
+      }
+      else {
+        const fontGlyphs = font.glyphs.glyphs
+        console.log(fontGlyphs)
+        const cleanGlyphs = Object.keys(fontGlyphs).map((key, index) => {
+          return {
+            name : fontGlyphs[key].name,
+            unicode: fontGlyphs[key].unicode
+          }
+        })
+        setGlyphs(cleanGlyphs)
+      }
+    
+    })
+
   }, [])
 
   return (
@@ -32,7 +56,7 @@ export default function Home(props) {
 
       <Header
         // date={dateState ? `${dateState.getUTCHours()}:${dateState.getUTCMinutes()}:${dateState.getUTCSeconds()} [GMT+1]` : "HH:mm:ss"}
-        date={dateState?.datetime.split("T")[1].split("+")[0].split(".")[0]}
+        date={`${dateState?.datetime.split("T")[1].split("+")[0].split(".")[0]} [${dateState?.abbreviation}]`}
       />
       <Footer
         font={"Denbora_02_07_12_35"}
@@ -51,15 +75,19 @@ export default function Home(props) {
       </div>
 
       <div className={`${container.default} ${container["padding-big"]}`}>
-        <p>aqui van los glifos</p>
+        <GlyphListContainer>
+          {glyphs ? Object.keys(glyphs).map(key => {
+            return <GlyphList key={key}>{String.fromCharCode(glyphs[key].unicode)}</GlyphList>
+          }) : ""}
+        </GlyphListContainer>
       </div>
 
-      <div className={`${container.default} ${container["padding-big"]}`}>
-        <p>aqui van los controladores de texto</p>
-      </div>
+
+      <TypeTester>
+        {texts.titular}
+      </TypeTester>
 
       <div className={`${container.default} ${container["padding-big"]}` }>
-        <p style={{fontSize: 150}}>{texts.titular}</p>
         <p style={{fontSize: 60}}>{texts.articleIntro}</p>
         <p style={{fontSize: 20}}>{texts.article}</p>
       </div>
