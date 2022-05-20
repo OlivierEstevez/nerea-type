@@ -15,7 +15,7 @@ body {
   font-size: 1.6rem;
   background-color: var(--color-background);
   color: var(--color-base);
-  padding: 48px 0px;
+  /* padding: 48px 0px; */
 }
 
 a {
@@ -64,3 +64,5 @@ body[data-theme="brown"] {
     --color-base: var(--color-green);
     --color-accent: var(--color-white); 
 }
+
+@import url("./inputs.css");

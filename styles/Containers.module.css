@@ -15,6 +15,10 @@
     left: 0px;
 }
 
+.screenHeight {
+    height: 100vh;
+}
+
 /* Paddings */
 .padding-small {
     padding: 0px 38px;
@@ -25,7 +29,14 @@
 }
 
 /* Distribution */
+.flex {
+    display: flex;
+}
 .space-between {
     display: flex;
     justify-content: space-between;
+}
+
+.vertical-center {
+    align-items: center;
 }

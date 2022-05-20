@@ -9,27 +9,35 @@ export default function TypeTester(props) {
   const [lineHeight, setLineHeight] = useState(180)
   const [value, setValue] = useState('left');
 
+  const [caps, setCaps] = useState("none")
+
   return (
     <div>
+      <div className={`${container.fullpage} ${container["padding-small"]} typeControls`}>
+        <div className={`${container.default} ${container["space-between"]} `}>
 
-      <div className={`${container.fullpage} typeControls`}>
-        <div className={`${container.default}`}>
+          <div>
+            <label htmlFor="typesize">Typesize</label>
+            <input type="range" name="typesize" id="typesize" min={80} max={220} defaultValue={typeSize} onChange={e => setTypeSize(e.target.value)} />
+            {/* <span>{typeSize}</span> */}
+          </div>
 
-          <label htmlFor="typesize">typesize</label>
-          <input type="range" name="typesize" id="typesize" min={80} max={220} defaultValue={typeSize} onChange={e => setTypeSize(e.target.value)} />
-          <span>{typeSize}</span>
+          <div>
+            <label htmlFor="spacing">Spacing</label>
+            <input type="range" name="spacing" id="spacing" min={-10} max={10} defaultValue={spacing} onChange={e => setSpacing(e.target.value)} />
+            {/* <span>{spacing}</span> */}
+          </div>
 
-          <label htmlFor="spacing">spacing</label>
-          <input type="range" name="spacing" id="spacing" min={-10} max={10} defaultValue={spacing} onChange={e => setSpacing(e.target.value)} />
-          <span>{spacing}</span>
+          <div>
+            <label htmlFor="lineHeight">Line Height</label>
+            <input type="range" name="lineHeight" id="lineHeight" min={100} max={260} defaultValue={lineHeight} onChange={e => setLineHeight(e.target.value)} />
+            {/* <span>{lineHeight}</span> */}
+          </div>
 
-          <label htmlFor="lineHeight">lineHeight</label>
-          <input type="range" name="lineHeight" id="lineHeight" min={100} max={260} defaultValue={lineHeight} onChange={e => setLineHeight(e.target.value)} />
-          <span>{lineHeight}</span>
-
-
-          <button>AllCaps</button>
-          <button>Default</button>
+          <div>
+            <button onClick={()=>setCaps("uppercase")}>AA</button>
+            <button onClick={()=>setCaps("none")}>Aa</button>
+          </div>
 
           <ToggleGroup.Root
             type="single"
@@ -49,8 +57,6 @@ export default function TypeTester(props) {
             </ToggleGroup.Item>
           </ToggleGroup.Root>
 
-          <span>{value}</span>
-
         </div>
       </div>
 
@@ -60,7 +66,8 @@ export default function TypeTester(props) {
           fontSize: `${typeSize}px`,
           letterSpacing: `${spacing / 100}em`,
           lineHeight: `${lineHeight / 150}`,
-          textAlign: value
+          textAlign: value,
+          textTransform: `${caps}`
         }}
       >
         {props.children}
@@ -71,7 +78,8 @@ export default function TypeTester(props) {
           background-color: var(--color-foreground);
           border-top: 1px solid var(--color-base);
           border-bottom: 1px solid var(--color-base);
-          padding: 12px 0px;
+          padding-top: 12px;
+          padding-bottom: 12px;
         }
 
 

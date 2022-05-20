@@ -62,12 +62,10 @@ export default function Home(props) {
         font={"Denbora_02_07_12_35"}
       />
 
-      <div className={`${container.fullpage}`}>
-        <h1>{props.date}</h1>
-      </div>
-
-      <div className={`${container.default} ${container["padding-small"]}`}>
-        <h1>contenidoo</h1>
+      <div className={`${container.fullpage} ${container.screenHeight} `} style={{background: "rgba(0, 0, 0, 0.2),"}}>
+        <div className={`${container["padding-small"]}`}>
+          <h1>reloj</h1>
+        </div>
       </div>
 
       <div className={`${container.default} ${container["padding-big"]}`} style={{fontSize: 85}}>
@@ -89,7 +87,7 @@ export default function Home(props) {
 
       <div className={`${container.default} ${container["padding-big"]}` }>
         <p style={{fontSize: 60}}>{texts.articleIntro}</p>
-        <p style={{fontSize: 20}}>{texts.article}</p>
+        <p style={{fontSize: 20, columnCount: 4, columnGap: 24}}>{texts.article}</p>
       </div>
 
     </div>
