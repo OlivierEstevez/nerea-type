@@ -1,21 +1,38 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head'
-import opentype from 'opentype.js'
+import Image from 'next/image';
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import {GlyphListContainer, GlyphList} from '../components/GlyphList';
+import { GlyphListContainer, GlyphList } from '../components/GlyphList';
 import TypeTester from '../components/TypeTester';
+import Debugger from '../components/Debugger';
+import Reddit from '../components/Reddit';
 
 import container from "../styles/Containers.module.css"
 
 import texts from "../assets/texts.json"
 
+import { SamsaFont } from '@Lorp/samsa';
+
+// const lolo = new SamsaFont({
+//   fontFamily: "Denbora",
+//   url: "",
+//   filename: "tipo.ttf",
+//   callback: (e)=>{console.log("hihi")}
+// }, {
+//   isNode: true
+// })
+// console.log(lolo)
+
+// lolo.exportInstance()
 
 export default function Home(props) {
 
-  const [dateState, setDateState] = useState()
   const [glyphs, setGlyphs] = useState()
+  const [dateState, setDateState] = useState()
+  const [theme, setTheme] = useState()
+  const [GifURL, setGifURL] = useState("TFG_Hourglass_black.gif")
 
   useEffect(() => {
     const fetchTime = async () => {
@@ -25,26 +42,33 @@ export default function Home(props) {
     }
     fetchTime()
     setInterval(() => fetchTime(), 1000)
-
-    opentype.load("/TFG_v_03GX.ttf", (err, font) => {
-      if(err) {
-        console.log(font)
-      }
-      else {
-        const fontGlyphs = font.glyphs.glyphs
-        console.log(fontGlyphs)
-        const cleanGlyphs = Object.keys(fontGlyphs).map((key, index) => {
-          return {
-            name : fontGlyphs[key].name,
-            unicode: fontGlyphs[key].unicode
-          }
-        })
-        setGlyphs(cleanGlyphs)
-      }
-    
-    })
-
   }, [])
+
+  useEffect(() => {
+    if (props.font) {
+      console.log(props.font.glyphs)
+      const cleanGlyphs = Object.keys(props.font.glyphs).map((key, index) => {
+        return {
+          name: props.font.glyphs[key].name,
+          unicode: props.font.glyphs[key].unicode
+        }
+      })
+      setGlyphs(cleanGlyphs)
+    }
+  }, [props.font])
+
+  useEffect(() => {
+    if(theme == "white")
+      setGifURL("TFG_Hourglass_black.gif")
+    if(theme == "black")
+      setGifURL("TFG_Hourglass_white.gif")
+    if(theme == "green")
+      setGifURL("TFG_Hourglass_black.gif")
+    if(theme == "purple")
+      setGifURL("TFG_Hourglass_black.gif")
+    if(theme == "brown")
+      setGifURL("TFG_Hourglass_green.gif")
+  }, [theme])
 
   return (
     <div>
@@ -54,41 +78,94 @@ export default function Home(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header
-        // date={dateState ? `${dateState.getUTCHours()}:${dateState.getUTCMinutes()}:${dateState.getUTCSeconds()} [GMT+1]` : "HH:mm:ss"}
-        date={`${dateState?.datetime.split("T")[1].split("+")[0].split(".")[0]} [${dateState?.abbreviation}]`}
-      />
+      <Debugger axes={props.font?.axes} />
+
+      <Header theme={theme => setTheme(theme)} />
+
       <Footer
         font={"Denbora_02_07_12_35"}
       />
 
-      <div className={`${container.fullpage} ${container.screenHeight} `} style={{background: "rgba(0, 0, 0, 0.2),"}}>
-        <div className={`${container["padding-small"]}`}>
-          <h1>reloj</h1>
+      <div className={`${container.fullpage} ${container.screenHeight} `}>
+        <div className={`clock-container variable-type ${container["padding-small"]}`}>
+          <h1 className="clock">
+              <span className="date">{`${dateState?.datetime.split("T")[0].split("-")[2]}/${dateState?.datetime.split("T")[0].split("-")[1]}/${dateState?.datetime.split("T")[0].split("-")[0].split("0")[1]}`}</span> 
+              <span className="time">{`${dateState?.datetime.split("T")[1].split("+")[0].split(".")[0]}`}</span>
+            </h1>
+          <p className="type-title">Denbora Typeface</p>
         </div>
       </div>
 
-      <div className={`${container.default} ${container["padding-big"]}`} style={{fontSize: 85}}>
+      <div className={`variable-type ${container.default} ${container["padding-big"]}`} style={{ fontSize: 85 }}>
         <p>{texts.introduction}</p>
       </div>
 
       <div className={`${container.default} ${container["padding-big"]}`}>
         <GlyphListContainer>
-          {glyphs ? Object.keys(glyphs).map(key => {
-            return <GlyphList key={key}>{String.fromCharCode(glyphs[key].unicode)}</GlyphList>
+
+          {glyphs ? Object.keys(glyphs).filter((key) => {
+            if (glyphs[key].name == ".notdef" || glyphs[key].name == "space")
+              return false
+            return true
+          }).map(key => {
+            return <GlyphList id={glyphs[key].name} key={key}>{String.fromCharCode(glyphs[key].unicode)}</GlyphList>
           }) : ""}
+
         </GlyphListContainer>
       </div>
-
 
       <TypeTester>
         {texts.titular}
       </TypeTester>
 
-      <div className={`${container.default} ${container["padding-big"]}` }>
-        <p style={{fontSize: 60}}>{texts.articleIntro}</p>
-        <p style={{fontSize: 20, columnCount: 4, columnGap: 24}}>{texts.article}</p>
+      <div className={`variable-type ${container.default} ${container["padding-big"]}`}>
+        <p style={{ fontSize: 60, marginBottom: 48 }}>{texts.articleIntro}</p>
+        <p style={{ fontSize: 20, columnCount: 4, columnGap: 24, marginBottom: 48}}>{texts.article}</p>
       </div>
+
+      <Reddit/>
+
+      <div className={`gif ${container.default} ${container["padding-big"]}`}>
+        <Image src={`/${GifURL}`} width={100} height={100} />
+        <span>Nerea Beunza, 2021 / ...</span>
+      </div>
+
+
+      <style jsx>{`
+        .clock-container {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          translate: -50% -50%;
+          text-align: center;
+          pointer-events: none;
+        }
+        .clock-container .clock {
+          font-size: 21vw;
+          line-height: 1;
+          margin: 0px;
+        }
+        .clock-container .clock span {
+          display: block;
+        }
+        .clock-container .type-title {
+          font-size: 62px;
+          margin-top: -10px;
+        }
+
+        .gif {
+          margin-bottom: 48px;
+          padding-top: 300px;
+          padding-bottom: 300px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .gif span {
+          margin-top: 20px;
+        }
+
+      `}</style>
 
     </div>
   )

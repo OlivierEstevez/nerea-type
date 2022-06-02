@@ -7,7 +7,8 @@ export function GlyphListContainer(props) {
               .glyphsContainer {
                   display: grid;
                   grid-template-columns: repeat(16, 1fr);
-                  gap: 0px;            
+                  gap: 0px;
+                  margin: 72px 0px;     
               }
           `}</style>
       </div>
@@ -17,7 +18,7 @@ export function GlyphListContainer(props) {
 export function GlyphList(props) {
     const rawString = String.raw`${props.children}`
   return (
-    <div className="glyph">
+    <div className="glyph variable-type" id={props.id}>
         {rawString}
 
         <span>{rawString}</span>
@@ -37,7 +38,7 @@ export function GlyphList(props) {
                 position: absolute;
                 height: 0%;
                 width: 0%;
-                font-size: 300%;
+                font-size: 250%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -50,8 +51,8 @@ export function GlyphList(props) {
                 display: none;
             }
             .glyph:hover span {
-                height: 300%;
-                width: 300%;
+                height: 250%;
+                width: 250%;
                 display: inherit;
             }
         `}</style>

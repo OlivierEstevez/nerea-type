@@ -8,6 +8,10 @@
     line-height: 0;
     cursor: pointer;
 }
+
+.icon-button[data-state=off]{
+    opacity: 0.3;
+}
   
 input[type="range"] {
     -webkit-appearance: none;

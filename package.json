@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@Lorp/samsa": "github:Lorp/samsa",
     "@radix-ui/react-toggle-group": "^0.1.5",
     "next": "12.1.5",
     "normalize.css": "^8.0.1",

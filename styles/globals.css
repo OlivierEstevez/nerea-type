@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Denbora";
+  src: url("/tipo.ttf") format("truetype");
+}
+
 @import url("./variables.css");
 
 * {
@@ -8,11 +13,16 @@
 
 html {
   font-size: 62.5%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; 
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: sans-serif;
+  font-family: "Denbora", sans-serif;
+  font-variation-settings: "wght" 500;
   font-size: 1.6rem;
+  line-height: 1.2;
   background-color: var(--color-background);
   color: var(--color-base);
   /* padding: 48px 0px; */
@@ -66,3 +76,16 @@ body[data-theme="brown"] {
 }
 
 @import url("./inputs.css");
+
+/* Global Classes */
+.variable-type {
+  font-variation-settings: var(--variables);
+}
+
+.visible {
+  display: initial;
+}
+
+.invisible {
+  display: none !important;
+}

@@ -40,3 +40,10 @@
 .vertical-center {
     align-items: center;
 }
+
+.gap16 * {
+    margin-right: 16px;
+}
+.gap16 *:last-child {
+    margin-right: 0px;
+}
